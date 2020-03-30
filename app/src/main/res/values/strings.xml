@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Music Player</string>
+
+    <string-array name="category_list">
+        <item>Tango</item>
+        <item>Salsa</item>
+        <item>Bachata</item>
+        <item>Reggaeton</item>
+    </string-array>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="track_category_row_item_text_size">100dp</dimen>
+    <dimen name="track_row_item_text_size">56dp</dimen>
+    <dimen name="padding">16dp</dimen>
+</resources>
