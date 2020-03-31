@@ -5,7 +5,8 @@ import ru.akulinina.musicplayer.tracklist.dto.Track
 
 class GetTrackListMainUseCase(private val repository: TracksRepository) : GetTrackListUseCase {
 
-    override suspend fun getTrackList(query: String): List<Track> {
-        return repository.getTracks(query) ?: listOf()
+    @Suppress("UselessCallOnCollection")
+    override suspend fun invoke(query: String): List<Track> {
+        return repository.getTracks(query)?.filterNotNull() ?: listOf()
     }
 }

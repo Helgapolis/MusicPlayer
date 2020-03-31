@@ -2,7 +2,7 @@ package ru.akulinina.musicplayer.category.presentation
 
 class TrackCategoryPresenter(private var model: String) {
     private var view: TrackCategoryView? = null
-    private var router: TrackCategoryRouter? = null
+    private var mediator: TrackCategoryMediator? = null
 
     fun attachView(view: TrackCategoryView) {
         this.view = view
@@ -14,15 +14,15 @@ class TrackCategoryPresenter(private var model: String) {
         view = null
     }
 
-    fun attachRouter(router: TrackCategoryRouter) {
-        this.router = router
+    fun attachRouter(mediator: TrackCategoryMediator) {
+        this.mediator = mediator
     }
 
     fun detachRouter() {
-        this.router = null
+        this.mediator = null
     }
 
     fun onTrackCategoryClick() {
-        router?.onCategoryClicked(model)
+        mediator?.onCategoryClicked(model)
     }
 }

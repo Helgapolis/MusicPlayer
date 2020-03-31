@@ -22,7 +22,7 @@ class TrackListViewModel(private val getTrackListUseCase: GetTrackListUseCase): 
         scope.launch {
             withContext(Dispatchers.IO) {
 
-                val trackList = getTrackListUseCase.getTrackList(query)
+                val trackList = getTrackListUseCase.invoke(query)
                 tracksLiveData.postValue(trackList)
             }
         }

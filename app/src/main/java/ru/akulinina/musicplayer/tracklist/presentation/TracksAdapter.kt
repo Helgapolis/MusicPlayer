@@ -8,17 +8,12 @@ import ru.akulinina.musicplayer.tracklist.dto.Track
 
 class TracksAdapter(private val trackItemRouter: TrackItemRouter) : RecyclerView.Adapter<TrackViewHolder>() {
 
-    @Suppress("SENSELESS_COMPARISON")
     var tracks: List<Track> = listOf()
         set(value) {
             field = value
             presenters.clear()
 
             for (track in tracks) {
-                if (track == null) {
-                    continue
-                }
-
                 val presenter = TrackPresenter(track)
                 presenters.add(presenter)
             }

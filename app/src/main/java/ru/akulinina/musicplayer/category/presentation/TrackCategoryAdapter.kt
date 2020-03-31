@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.akulinina.musicplayer.R
 
-class TrackCategoryAdapter(private val trackCategoryRouter: TrackCategoryRouter?): RecyclerView.Adapter<TrackCategoryViewHolder>() {
+class TrackCategoryAdapter(private val trackCategoryMediator: TrackCategoryMediator?): RecyclerView.Adapter<TrackCategoryViewHolder>() {
 
     @Suppress("SENSELESS_COMPARISON")
     var tracks: List<String> = listOf()
@@ -44,8 +44,8 @@ class TrackCategoryAdapter(private val trackCategoryRouter: TrackCategoryRouter?
 
         val presenter = presenters[position]
         presenter.attachView(holder)
-        if (trackCategoryRouter != null) {
-            presenter.attachRouter(trackCategoryRouter)
+        if (trackCategoryMediator != null) {
+            presenter.attachRouter(trackCategoryMediator)
         }
 
         holder.onFinishInflate(presenter)

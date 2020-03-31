@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import ru.akulinina.musicplayer.category.presentation.TrackCategoryRouter
+import ru.akulinina.musicplayer.category.presentation.TrackCategoryMediator
 import ru.akulinina.musicplayer.tracklist.presentation.TrackListFragment
 
-class MainActivity : AppCompatActivity(), TrackCategoryRouter {
+class MainActivity : AppCompatActivity(), TrackCategoryMediator {
 
     private var navigationController: NavController? = null
 
