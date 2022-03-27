@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_track_list.*
-import ru.akulinina.musicplayer.R
+import ru.akulinina.musicplayer.databinding.FragmentTrackListBinding
 import ru.akulinina.musicplayer.track.presentation.TrackVideoActivity
 import ru.akulinina.musicplayer.tracklist.data.ApiFactory
 import ru.akulinina.musicplayer.tracklist.data.MainTracksRepository
@@ -27,12 +25,19 @@ class TrackListFragment : Fragment(), TrackItemRouter {
     private lateinit var trackListViewModel: TrackListViewModel
     private lateinit var contentAdapter: TracksAdapter
 
+    private var _binding: FragmentTrackListBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_track_list, container, false)
+        _binding = FragmentTrackListBinding.inflate(layoutInflater)
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,6 +46,7 @@ class TrackListFragment : Fragment(), TrackItemRouter {
         val query = arguments?.getString(KEY_BUNDLE_QUERY) ?: ""
 
         val layoutManager = LinearLayoutManager(view.context)
+        val fragmentTrackListContentList = binding.fragmentTrackListContentList
         fragmentTrackListContentList.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(view.context, layoutManager.orientation)
         fragmentTrackListContentList.addItemDecoration(dividerItemDecoration)
@@ -53,9 +59,9 @@ class TrackListFragment : Fragment(), TrackItemRouter {
         trackListViewModel = ViewModelProvider(this, viewModelProvider).get(TrackListViewModel::class.java)
 
         trackListViewModel.fetchTracks(query)
-        trackListViewModel.tracksLiveData.observe(viewLifecycleOwner, Observer {
+        trackListViewModel.tracksLiveData.observe(viewLifecycleOwner) {
             contentAdapter.tracks = it
-        })
+        }
     }
 
     override fun onTrackClick(track: Track) {
@@ -66,6 +72,7 @@ class TrackListFragment : Fragment(), TrackItemRouter {
 
     override fun onDestroyView() {
         trackListViewModel.cancelAllRequests()
+        _binding = null
         super.onDestroyView()
     }
 }
