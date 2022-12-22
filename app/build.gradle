@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "ru.bazalikova.musicplayer"
+        applicationId "ru.akulinina.musicplayer"
         minSdkVersion 16
         targetSdkVersion 32
         versionCode 1

@@ -11,6 +11,7 @@
 
     <string name="dlg_input_new_category">Input new category</string>
     <string name="dlg_category_name_exists">That category name exists</string>
+    <string name="dlg_network_error">Server not response</string>
 
     <string name="category_menu_item_add">Add category</string>
 </resources>
