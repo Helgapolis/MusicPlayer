@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import ru.akulinina.musicplayer.tracklist.data.ResultWrapper
-import ru.akulinina.musicplayer.tracklist.domain.GetTrackListUseCase
+import ru.akulinina.musicplayer.tracklist.domain.usecase.GetTrackListUseCase
 import ru.akulinina.musicplayer.tracklist.dto.Track
 import kotlin.coroutines.CoroutineContext
 

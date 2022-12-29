@@ -70,7 +70,7 @@ class CategoryFragment : Fragment(), TrackCategoryRouter {
         val repository = MainTrackCategoryRepository(view.context, db)
         val getCategoriesUseCase = GetCategoriesMainUseCase(repository)
         val addCategoryUseCase = AddCategoryMainUseCase(repository)
-        val viewModelProvider = TrackCategoryViewModelProvider(getCategoriesUseCase, addCategoryUseCase)
+        val viewModelProvider = TrackCategoryViewModelProvider(getCategoriesUseCase, addCategoryUseCase, this.requireActivity().application)
         trackCategoryViewModel = ViewModelProvider(this, viewModelProvider).get(TrackCategoryViewModel::class.java)
         trackCategoryViewModel.attachRouter(this)
 

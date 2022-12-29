@@ -16,7 +16,7 @@ import ru.akulinina.musicplayer.databinding.FragmentTrackListBinding
 import ru.akulinina.musicplayer.track.presentation.TrackVideoActivity
 import ru.akulinina.musicplayer.tracklist.data.ApiFactory
 import ru.akulinina.musicplayer.tracklist.data.MainTracksRepository
-import ru.akulinina.musicplayer.tracklist.domain.GetTrackListMainUseCase
+import ru.akulinina.musicplayer.tracklist.domain.usecase.GetTrackListMainUseCase
 import ru.akulinina.musicplayer.tracklist.dto.Track
 
 class TrackListFragment : Fragment(), TrackItemRouter, TrackListRouter {
@@ -57,8 +57,7 @@ class TrackListFragment : Fragment(), TrackItemRouter, TrackListRouter {
         contentAdapter = TracksAdapter(this)
         fragmentTrackListContentList.adapter = contentAdapter
         val viewModelProvider = TrackListViewModelProvider(
-            GetTrackListMainUseCase(MainTracksRepository(ApiFactory.getApi(view.context)))
-        )
+            GetTrackListMainUseCase(MainTracksRepository(ApiFactory.getApi(view.context))), this.requireActivity().application)
         trackListViewModel = ViewModelProvider(this, viewModelProvider).get(TrackListViewModel::class.java)
         trackListViewModel.attachRouter(this)
 

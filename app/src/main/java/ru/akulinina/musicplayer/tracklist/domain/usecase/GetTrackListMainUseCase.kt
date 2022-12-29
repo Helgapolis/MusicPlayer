@@ -1,4 +1,4 @@
-package ru.akulinina.musicplayer.tracklist.domain
+package ru.akulinina.musicplayer.tracklist.domain.usecase
 
 import ru.akulinina.musicplayer.tracklist.data.ResultWrapper
 import ru.akulinina.musicplayer.tracklist.data.TracksRepository
