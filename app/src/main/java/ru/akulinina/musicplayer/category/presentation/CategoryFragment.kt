@@ -5,6 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -17,10 +24,14 @@ import ru.akulinina.musicplayer.R
 import ru.akulinina.musicplayer.category.data.MainTrackCategoryRepository
 import ru.akulinina.musicplayer.category.domain.AddCategoryMainUseCase
 import ru.akulinina.musicplayer.category.domain.GetCategoriesMainUseCase
+import ru.akulinina.musicplayer.category.presentation.*
+import ru.akulinina.musicplayer.category.presentation.model.CategoryItem
 import ru.akulinina.musicplayer.databinding.FragmentTrackCategoryBinding
 
 class CategoryFragment : Fragment(), TrackCategoryRouter {
 
+    private var composeView: ComposeView? = null
+    
     private var trackCategoryMediator: TrackCategoryMediator? = null
 
     private lateinit var trackCategoryViewModel: TrackCategoryViewModel
@@ -50,33 +61,44 @@ class CategoryFragment : Fragment(), TrackCategoryRouter {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTrackCategoryBinding.inflate(layoutInflater)
-        return _binding?.root
+       // _binding = FragmentTrackCategoryBinding.inflate(layoutInflater)
+       // return _binding?.root
+        composeView = ComposeView(requireContext())
+        return composeView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val layoutManager = LinearLayoutManager(view.context)
+        /*val layoutManager = LinearLayoutManager(view.context)
         val fragmentTrackCategoryContentList = binding.fragmentTrackCategoryContentList
         fragmentTrackCategoryContentList.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(view.context, layoutManager.orientation)
         fragmentTrackCategoryContentList.addItemDecoration(dividerItemDecoration)
 
         contentAdapter = TrackCategoryAdapter(trackCategoryMediator)
-        fragmentTrackCategoryContentList.adapter = contentAdapter
+        fragmentTrackCategoryContentList.adapter = */
         val db = AppDatabase.getDatabase(view.context)
 
         val repository = MainTrackCategoryRepository(view.context, db)
         val getCategoriesUseCase = GetCategoriesMainUseCase(repository)
         val addCategoryUseCase = AddCategoryMainUseCase(repository)
         val viewModelProvider = TrackCategoryViewModelProvider(getCategoriesUseCase, addCategoryUseCase, this.requireActivity().application)
-        trackCategoryViewModel = ViewModelProvider(this, viewModelProvider).get(TrackCategoryViewModel::class.java)
+        trackCategoryViewModel = ViewModelProvider(this, viewModelProvider).get(
+            TrackCategoryViewModel::class.java)
         trackCategoryViewModel.attachRouter(this)
 
         trackCategoryViewModel.fetchCategories()
         trackCategoryViewModel.categoriesLiveData.observe(viewLifecycleOwner) {
-            contentAdapter.tracks = it.map { it.name }
+            composeView?.setContent {
+                LazyColumn(modifier = Modifier.fillMaxSize()
+                    .background(Color.White)) {
+                    itemsIndexed(it.map { it.name }) { _, item ->
+                        CategoryRow(categoryItem = CategoryItem(item), mediator = trackCategoryMediator)
+                    }
+                }
+            }
+            //contentAdapter.tracks = it.map { it.name }
         }
     }
 
